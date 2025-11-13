@@ -1,9 +1,11 @@
-
+import json
 
 class StudentManager:
+    students_data = {}
     def add_student ( students , name ): 
-        
-    def add_grade ( students , name , grade ): ...
+        students_data[name] = []
+    def add_grade ( students , name , grade ): 
+        students_data[name] = [grade]
     def average ( students , name ): ...
     def save_to_file ( students , filename ): ...
     def load_from_file ( filename ): ...
@@ -12,6 +14,20 @@ class StudentManager:
 if __name__ == "__main__":
 
     print("Welcome to the Student Grade Manager.")
-    print("Please choose an option: ")
-    user_selection = input("1. Add student \n 2. Add grade \n 3. Show average for student \n 4. Show all students \n 5. Save to file \n 6. Load from file \n 7. Exit")
+    while True:
+        print("Please choose an option: ")
+        user_selection = input("1. Add student \n 2. Add grade \n 3. Show average for student \n 4. Show all students \n 5. Save to file \n 6. Load from file \n 7. Exit")
         
+        match user_selection:
+            case "1":
+                name_input = input("Enter name: \n")
+                s1 = StudentManager(name_input)
+                add_student(s1, name_input)
+            case "2":
+                name_input = input("Enter name: \n")
+                if name_input in students_data:
+                    grade_input = input("Enter grade: \n")
+                    add_grade(s1, name_input, grade_input)
+
+                else:
+                    print("No such user exists with the name {name_input}.")
