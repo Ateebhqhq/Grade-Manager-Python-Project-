@@ -1,6 +1,7 @@
 import json
 import numpy
 import sys
+import time
 
 class StudentManager:
     students_data = {}
@@ -16,19 +17,22 @@ class StudentManager:
             students.students_data[name] = []
             print(f"Student {name} has been successfully added : )).\n")
     def add_grade(students, name, grade): 
-        students.students_data[name] = [grade]
+        students.students_data[name].append(grade)
     def average (students, name): 
         grades = students.students_data[name]
-        avg_grade = grades.avg()
+        avg_grade = numpy.mean(grades)
         print("The average grade for {name} is {avg_grade}")
         
-    def display_students(students):
-        print(students.students_data)
+    # def display_students(students):
+    #     print(students.students_data)
 
-    def save_to_file ( students , filename ): 
+    def save_to_file(students, filename): 
         with open(filename, "w") as file:
             json.dump(students.students_data, file)
-    #def load_from_file ( filename ): 
+
+    def load_from_file(filename):
+        with open(filename, "r") as file:
+            print(filename) 
 
 
 if __name__ == "__main__":
@@ -51,14 +55,28 @@ if __name__ == "__main__":
 
                 else:
                     print("No such user exists with the name {name_input}.")
+                    time.sleep(1)
 
             case "3":
                 name_input = input("Enter the student's name:")
-                if name_input in students.students_data:
+                if name_input in manager.students_data:
                     manager.average(name_input)
 
                 else:
                     print("The student {name} does not exist.")
+
+            case "4":
+                whole_students_data = manager.students_data
+                print("Name:           Grades:")
+                print(whole_students_data)
+
+            case "5":
+                input_filename = input("\nWhat name do you want to give to your file? \n")
+                save_to_file(input_filename)
+
+            case "6":
+                input_filename = input("\n Input the filename which you want to load.\n")
+                load_from_file(input_filename)
 
             case "7":
                 print("The program is shutting off. Ciao :( ")
